@@ -13,10 +13,12 @@ public:
 	~Pic();
 	void load();							//加载并显示图片
 	void prehandle();						//图像预处理
-	void position();                        //车牌定位
+	void position();						//车牌定位
+	void division();						//车牌分割
+	void identify();						//车牌识别
 
 public:
-	string filename;						//文件名称
+	string filename;						//图像文件名称
 
 	Mat sPic;								//原始图像数据
 	Mat tPic;								//临时图像数据

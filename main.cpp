@@ -21,7 +21,7 @@ using namespace cv;
 
 int main()
 {
-	Pic pic1("src5.jpg");
+	Pic pic1("src1.jpg");
 
 	pic1.load();
 	pic1.prehandle();

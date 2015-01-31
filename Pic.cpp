@@ -41,8 +41,6 @@ void Pic::prehandle()
 {
 	sPic = imread(filename,CV_LOAD_IMAGE_GRAYSCALE);		//提取原图像,并灰度化
 
-
-
 	GaussianBlur(sPic,tPic,Size(11,11),0,0);                //高斯平滑滤波，轻微滤波
 
     Canny(tPic,tPic,100,100);								//Canny算子获取边缘
