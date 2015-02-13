@@ -27,10 +27,14 @@ public:
 	void identify();						//车牌识别
 	void closeAllImage();					//关闭所有图片窗口
 
-	OperationFlag getCurrentFlag ();		//获取当前操作的标志位
+	string getSourceWinName() const;		//获取原图片窗口名称
+	string getDirectionWinName() const;		//获取目标图片窗口名称
+	Mat getSourceMat() const;				//获取原图像
+	Mat getDirectionMat() const;			//获取目标图像
+	OperationFlag getCurrentFlag () const;	//获取当前操作的标志位
 	Mat getLastMat() const;					//获取最近一次结果
 
-public:
+private:
 	string filepath;						//图像文件名称
 
 	Mat sPic;								//原始图像数据

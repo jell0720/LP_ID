@@ -172,7 +172,7 @@ void CLP_IDDlg::OnOpenPicture()
 		CString filename = dlg.GetPathName();
 		//设置并显示该图像
 		if (picture.load(filename.GetBuffer(filename.GetLength()))){
-			imshow(picture.sPic_winname, picture.sPic);
+			imshow(picture.getSourceWinName(), picture.getSourceMat());
 		}
 		else{
 			MessageBox("打开图片失败");
@@ -202,7 +202,10 @@ void CLP_IDDlg::OnPlatePosition()
 
 void CLP_IDDlg::OnCharDivision()
 {
-	// TODO: Add your control notification handler code here
+	if (PIC_POSITION == picture.getCurrentFlag())
+		picture.division();
+	else
+		MessageBox("请先进行车牌定位");
 }
 
 

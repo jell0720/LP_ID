@@ -36,6 +36,9 @@
     <ClInclude Include="Pic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="histogram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LP_ID.cpp">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Pic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="histogram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

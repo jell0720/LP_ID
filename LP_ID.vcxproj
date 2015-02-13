@@ -101,6 +101,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="histogram.h" />
     <ClInclude Include="LP_ID.h" />
     <ClInclude Include="LP_IDDlg.h" />
     <ClInclude Include="Pic.h" />
@@ -109,6 +110,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="histogram.cpp" />
     <ClCompile Include="LP_ID.cpp" />
     <ClCompile Include="LP_IDDlg.cpp" />
     <ClCompile Include="Pic.cpp" />

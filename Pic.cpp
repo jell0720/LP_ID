@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Pic.h"
+#include "histogram.h"
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
@@ -46,7 +47,7 @@ void Pic::prehandle()
 {
 	sPic = imread(filepath, CV_LOAD_IMAGE_GRAYSCALE);		//灰度化
 
-	GaussianBlur(sPic,tPic,Size(11,11),0,0);				//高斯平滑滤波，轻微滤波
+	GaussianBlur(sPic, tPic, Size(13,13), 0, 0);			//高斯平滑滤波，轻微滤波
 
     Canny(tPic,tPic,100,100);								//Canny算子获取边缘
 
@@ -64,37 +65,65 @@ void Pic::position()
 {
 	Mat ele = Mat::ones(tPic.rows*9/100,tPic.cols*9/100,CV_8U);
 
-	for(int i = 0;i < 1;i++)                                //开闭操作
+	for(int i = 0;i < 2;i++)                                //开闭操作
 	{
 	    morphologyEx(tPic,tPic,MORPH_CLOSE,ele);
         morphologyEx(tPic,tPic,MORPH_OPEN,ele);
 	}
-	imshow("开闭操作",tPic);
 
+	//查找边界
+	vector<vector<Point>>contours;
+	Mat imageROI(tPic.size(), CV_8U, Scalar(255));
+	findContours(tPic,
+		contours,
+		CV_RETR_EXTERNAL,
+		CV_CHAIN_APPROX_NONE);
+
+	vector<vector<Point>>::const_iterator itc = contours.begin();
+	unsigned int maxVal = itc->size(),number=0;
+	while (itc != contours.end())
+	{
+		if (itc->size() > maxVal)
+			number = distance<vector<vector<Point>>::const_iterator>(contours.begin(), itc);
+		itc++;
+	}
+
+	Rect r0 = boundingRect(Mat(contours[number]));
+	tPic = sPic(r0);
+
+	imshow("ROI", tPic);
 	CurrentFlag = PIC_POSITION;
 }
 
-//函数名称：closeAllImage()
-//函数功能：关闭所有图片窗口
-//输入参数：无
-//返回参数：无
+void Pic::division(){
+	Histogram h;
+	imshow("Hist", h.getHistogramImage(tPic));
+}
+
 void Pic::closeAllImage(){
 	destroyAllWindows();
 	CurrentFlag = PIC_POSITION;
 }
 
-//函数名称：getLastMat()
-//函数功能：获取最近一次操作结果
-//输入参数：无
-//返回参数：Mat tPic;
+string Pic::getSourceWinName() const{
+	return sPic_winname;
+}
+
+string Pic::getDirectionWinName() const{
+	return dPic_winname;
+}
+Mat Pic::getSourceMat() const{
+	return sPic;
+}
+
+Mat Pic::getDirectionMat() const{
+	return dPic;
+}
+
 Mat Pic::getLastMat() const{
 	return tPic;
 }
 
-//函数名称：getMatFlag()
-//函数功能：获取当前操作的标志位
-//输入参数：无
-//返回参数：uchar型,当前的操作所对应的标志
-OperationFlag Pic::getCurrentFlag(){
+OperationFlag Pic::getCurrentFlag() const{
 	return CurrentFlag;
 }
